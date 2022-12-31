@@ -1,4 +1,17 @@
+const { default: mongoose } = require('mongoose');
 const playwright = require('playwright');
+const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority'
+
+async function connect() {
+        try {
+            await mongoose.connect(uri);
+            console.log("MongoDB is connected")
+        } catch (error) {
+            console.log(error);
+        }
+    }
+connect();
+
 (async () => {
     const browser = await playwright.chromium.launch({ headless: false });
     const page = await browser.newPage();
