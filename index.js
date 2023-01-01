@@ -1,7 +1,10 @@
 const { default: mongoose } = require('mongoose');
 const playwright = require('playwright');
 const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority'
-
+const headphonesSchema = new mongoose.Schema({
+    name: String
+})
+const testModel = mongoose.model("testowy",headphonesSchema)
 async function connect() {
         try {
             await mongoose.connect(uri);
@@ -9,8 +12,16 @@ async function connect() {
         } catch (error) {
             console.log(error);
         }
-    }
+}
+    
+async function addItem() {
+    await testModel.create({
+        name:"testowa nazwa"
+    })
+}
 connect();
+addItem();
+
 
 (async () => {
     const browser = await playwright.chromium.launch({ headless: false });
