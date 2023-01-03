@@ -1,8 +1,11 @@
 const { default: mongoose } = require('mongoose');
 const playwright = require('playwright');
-const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority' // of course this is only public becaus that code is not for bussiness just for trainign purposes
 const headphonesSchema = new mongoose.Schema({
-    name: String
+    name: String,
+    price: String,
+    url: String
+
 })
 const testModel = mongoose.model("testowy",headphonesSchema)
 async function connect() {
@@ -37,7 +40,16 @@ addItem();
             const price = await page.textContent(`//article[${i}]/div/div/div[2]/div[2]/div/div/span`)
             const hrefElement = await page.$(`//article[${i}]/div/div/div[2]/div[1]/h2/a`);
             const href = await hrefElement.getAttribute('href');
-            console.log(`nr:${y * 68 + i},name:${title},\nprice: ${price},\nurl: ${href}`)
+            console.log(`nr:${y * 68 + i},name:${title},\nprice: ${price},\nurl: ${href}`) //this line can be deleted later - only to help at development process
+            async function addItem() {
+                await testModel.create({
+                    name: title,
+                    price: price,
+                    url: href,
+                })
+            }
+            addItem()
+
         }
         
         await page.waitForTimeout(10000)
