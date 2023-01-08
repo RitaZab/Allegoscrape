@@ -4,7 +4,7 @@ const app = express()
 const fastCsv = require('fast-csv');
 const fs = require("fs")
 const csv = require("csv-stringify")
-
+const port=3000
 const ObjectsToCsv = require('objects-to-csv');
 
 const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority' 
@@ -26,17 +26,12 @@ const getDB = () => dbConnection
 let db
 connectToDB((err) => {
     if (!err) {
-        app.listen(3000, () => {
-    console.log("app listening on 3000")
+        app.listen(port, () => {
+            console.log("app listening on 3000")
+            
         })
-        db=getDB()
-    }
-})
-
-console.log("dupa")
- 
-app.get('/', (req, res) => {
-    let items=[]
+        db = getDB()
+            let items=[]
     db.collection('testowies')
         .find()//cursor
         .forEach(element => items.push(element))       
@@ -52,8 +47,8 @@ app.get('/', (req, res) => {
         .catch(() => {
         res.status(500).json({error:"Fetch impossible"})
     })
-
+        
+    }
 })
-
 
 
