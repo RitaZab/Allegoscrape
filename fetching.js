@@ -1,11 +1,9 @@
 const { MongoClient } = require('mongodb')
 const express = require('express')
 const app = express()
-const fastCsv = require('fast-csv');
 const fs = require("fs")
 const csv = require("csv-stringify")
 const port=3000
-const ObjectsToCsv = require('objects-to-csv');
 
 const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority' 
 let dbConnection
@@ -24,7 +22,7 @@ const connectToDB = (callback) => {
 }
 const getDB = () => dbConnection 
 let db
-connectToDB((err) => {
+const fetch = connectToDB((err) => {
     if (!err) {
         app.listen(port, () => {
             console.log("app listening on 3000")
@@ -52,3 +50,4 @@ connectToDB((err) => {
 })
 
 
+module.exports=fetch

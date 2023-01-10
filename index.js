@@ -1,7 +1,5 @@
 const { default: mongoose, Collection, connection } = require('mongoose');
 const playwright = require('playwright');
-
-const { callbackify } = require('util');
 const uri = 'mongodb+srv://allegroscraper:Allegro10@allegroscrap.d5ei0v4.mongodb.net/?retryWrites=true&w=majority' // of course this is only public becaus that code is not for bussiness just for trainign purposes
 const headphonesSchema = new mongoose.Schema({
     name: String,
@@ -45,13 +43,19 @@ connect();
                 })
             }
             addItem()
+            
         }        
-        await page.waitForTimeout(10000)
-        console.log(`${y + 1} site is done`)      
+        await page.waitForTimeout(1000)
+        console.log(`${y + 1} site is done`)
+
         if (y==0){await page.locator('//*[@id="search-results"]/div[2]/div[4]/div/div/div/a').click(); }
         else { await page.locator('//*[@id="search-results"]/div[2]/div[4]/div/div/div/a[2]').click(); }
-        await page.waitForTimeout(5000);    
+        await page.waitForTimeout(5000);
+        if (y == 9) { const fetching = require('./fetching')}
+        
     }
+    
+   
 })(); 
     
 
